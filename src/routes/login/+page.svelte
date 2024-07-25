@@ -1,39 +1,32 @@
 <script>
   import { goto } from "$app/navigation";
   import { signInWithCreds } from "$lib/firebase-auth";
+  import { authUser } from "$lib/store";
 
   let email = "";
   let passwd = "";
 
-  function login(e) {
+  let loading = false;
+  let showError = true;
+
+
+  async function login(e) {
+    loading = true;
+    console.log("loggin in ")
     e.preventDefault();
-    signInWithCreds(email, passwd);
-    goto("/console");
+    await signInWithCreds(email, passwd)
   }
+  authUser.subscribe((val) => {
+    if (val != null) {
+      goto("/console")
+    }
+    else {
+      showError = !showError;
+      loading = false;
+    }
+  })
 </script>
 
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <h2
@@ -89,8 +82,9 @@
         <button
           type="submit"
           class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          on:click={login}>Sign in</button
+          on:click={login}>{loading ? "..." : "Sign in"}</button
         >
+        {#if showError}Authentication failed try again{/if}
       </div>
     </form>
   </div>
