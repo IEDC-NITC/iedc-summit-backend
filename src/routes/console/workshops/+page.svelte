@@ -1,18 +1,37 @@
 <script>
+  import WorkshopForm from "../../../components/WorkshopForm.svelte";
+  import { getAllWorkshops } from "$lib/firebase-setup";
+  import { onMount } from "svelte";
+  import LectureCard from "../../../components/LectureCard.svelte";
+
+  let events = [];
+
+  onMount(async () => {
+    events = await getAllWorkshops();
+  });
+
+  let formOpen = false;
 </script>
 
 <div>
-  <nav>
-    <ul>
+  <header class="bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Workshops</h1>
+    </div>
+  </header>
+  <ul class="flex flex-col gap-2">
+    {#each events as event}
       <li>
-        <a href="/events"> Events</a>
+        <LectureCard {...event}></LectureCard>
       </li>
-      <li>
-        <a href="/workshops"> Workshops</a>
-      </li>
-      <li>
-        <a href="/lectures"> Lectures</a>
-      </li>
-    </ul>
-  </nav>
+    {/each}
+  </ul>
+  {#if formOpen}
+    <WorkshopForm />
+  {:else}
+    <button
+      class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      on:click={() => formOpen = true}>New Workshop</button
+    >
+  {/if}
 </div>

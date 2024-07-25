@@ -1,17 +1,17 @@
 <script>
-    import { loadImage } from "$lib/firebase-setup";
-    import { onMount } from "svelte";
-
-    let urlStr = "";
-
-    onMount(async () => {
-        urlStr = await loadImage()
-    })
+  import { authUser } from "$lib/store";
 </script>
 
-<div>
-  <div>
-    <h2>Login</h2>
+<div class="p-2">
+  <div class="p-2 flex">
+    {#if $authUser != null}
+    <div>
+      <a href="/console" class="p-2 rounded bg-slate-200">Go to Console</a>
+    </div>
+    {:else}
+    <a href="/login"> <div class="p-2 rounded bg-blue-500 text-white font-semibold">
+      Login
+    </div></a>
+    {/if}
   </div>
-  <a href="/console">Console</a>
 </div>

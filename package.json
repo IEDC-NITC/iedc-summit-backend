@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"firebase": "^10.12.4"
+		"firebase": "^10.12.4",
+		"svelte-feather-icons": "^4.1.0"
 	}
 }
