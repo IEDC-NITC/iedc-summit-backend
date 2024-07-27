@@ -3,17 +3,21 @@ import { auth } from "./firebase-setup"
 import { authUser } from "./store";
 
 
-export function signInWithCreds(email, password) {
+export async function signInWithCreds(email, password) {
+    let res = false;
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
             authUser.set(user)
+            res = true
             // ...
         })
         .catch((error) => {
+            authUser.set(null)
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage)
+            res = false
         });
+    return res;
 }
