@@ -6,7 +6,8 @@ export async function GET() {
     const workshops = await getAllWorkshops();
     return new Response(JSON.stringify({ events, lectures, workshops }), {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
         }
     });
 }
