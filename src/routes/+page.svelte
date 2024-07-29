@@ -15,3 +15,8 @@
     {/if}
   </div>
 </div>
+<svelte:head>
+  <title>
+    IEDC Admin``
+  </title>
+</svelte:head>

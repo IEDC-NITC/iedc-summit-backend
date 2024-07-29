@@ -1,3 +1,12 @@
+<script>
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    goto('/console/events')
+  })
+</script>
+
 <h1>
-  Hi
+  Loading...
 </h1>

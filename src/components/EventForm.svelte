@@ -1,6 +1,9 @@
 <script>
   import { addEvent } from "$lib/firebase-setup";
   import { getStorage, ref, uploadBytes } from "firebase/storage";
+  import ImageUpload from "./ImageUpload.svelte";
+
+  export let closeForm;
 
   let eventName = "";
   let linkToGuidelines = "";
@@ -9,16 +12,16 @@
   let price = 200;
   let venue = "";
 
-  // let fileEl = null;
-
+  let file = null;
+  
   async function submitForm() {
     if (eventName != "" && linkToReg != "") {
-      // if (fileEl != null) {
-      //   const storage = getStorage();
-      //   let file = fileEl.files[0];
-      //   const fileRef = ref(storage, `posters/${eventName}-${file.name}`);
-      //   await uploadBytes(fileRef, file);
-      // }
+      if (file != null) {
+        const storage = getStorage();
+        const fileRef = ref(storage, `posters/${eventName}-${file.name}`);
+        await uploadBytes(fileRef, file);
+        posterImage = `posters/${eventName}-${file.name}`
+      }
       await addEvent({
         eventName,
         linkToGuidelines,
@@ -27,6 +30,8 @@
         price,
         venue,
       });
+
+      closeForm()
     }
   }
 </script>
@@ -37,8 +42,6 @@
       <h2 class="text-base font-semibold leading-7 text-gray-900">
         Enter event info
       </h2>
-      
-      
     </div>
 
     <div class="border-b border-gray-900/10 pb-12">
@@ -95,21 +98,9 @@
             />
           </div>
         </div>
-        <div class="sm:col-span-4">
-          <label
-            for="email"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Poster Url</label
-          >
-          <div class="mt-2">
-            <input
-              id="text"
-              name="email"
-              type="text"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              bind:value={posterImage}
-            />
-          </div>
+        <div class="col-span-full">
+          <ImageUpload bind:file={file}></ImageUpload>
+          
         </div>
 
         <div class="sm:col-span-2 sm:col-start-1">
@@ -152,7 +143,7 @@
     <div class="mt-6 flex items-center justify-end gap-x-6">
       <button
         type="button"
-        class="text-sm font-semibold leading-6 text-gray-900">Cancel</button
+        class="text-sm font-semibold leading-6 text-gray-900" on:click={() => closeForm()}>Cancel</button
       >
       <button
         type="submit"

@@ -2,6 +2,8 @@
   import { authUser } from "$lib/store";
 
   import { page } from "$app/stores";
+
+  let menuOpen = false;
 </script>
 
 <!--
@@ -12,7 +14,7 @@
   <body class="h-full">
   ```
 -->
-<div class="min-h-full">
+<div class="min-h-full transition-all">
   <nav class="bg-gray-800">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
@@ -51,6 +53,7 @@
             class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             aria-controls="mobile-menu"
             aria-expanded="false"
+            on:click={() => menuOpen = !menuOpen}
           >
             <span class="absolute -inset-0.5"></span>
             <span class="sr-only">Open main menu</span>
@@ -90,7 +93,7 @@
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="md:hidden" id="mobile-menu">
+    <div class={menuOpen ? "md:hidden": "hidden"} id="mobile-menu">
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <a
@@ -123,8 +126,15 @@
       {#if $authUser != null}
       <slot />
       {:else}
+      <span class="font-semibold m-2">You've been logged out</span>
       <a href="/login" class="text-white font-semibold bg-blue-500 p-2 rounded">Login Here</a>
       {/if}
     </div>
   </main>
 </div>
+
+<svelte:head>
+  <title>
+    IEDC Admin Console
+  </title>
+</svelte:head>

@@ -1,5 +1,7 @@
 <script>
   import { deleteEvent } from "$lib/firebase-setup";
+  import { getDownloadURL, getStorage, ref } from "firebase/storage";
+  import { onMount } from "svelte";
 
   export let eventName;
   export let linkToReg;
@@ -8,6 +10,18 @@
   export let venue;
   export let posterImage;
   export let docId;
+
+  let posterUrl = ""
+
+  onMount(async () => {
+    // get poster url
+
+    const storage = getStorage()
+    getDownloadURL(ref(storage, posterImage)).then((url) => {
+      posterUrl = url;
+    })
+
+  })
 </script>
 
 <!--
@@ -43,7 +57,19 @@
           Link to Register
         </dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <a href={linkToReg}>{linkToReg}</a>
+          <a href={linkToReg} class="w-36"><span class="w-36 text-ellipsis whitespace-nowrap overflow-hidden" title={linkToReg}>
+            {linkToReg.substring(0, Math.min(64, linkToReg.length))}{#if linkToReg.length > 24}...{/if}
+          </span></a>
+        </dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">
+          Poster Image
+        </dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <a href={linkToReg} class="w-36"><span class="w-36 text-ellipsis whitespace-nowrap overflow-hidden" title={linkToReg}>
+            <img src={posterUrl} alt="" width="400px">
+          </span></a>
         </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -51,7 +77,7 @@
           Link to Guidelines
         </dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <a href={linkToGuidelines}>{linkToGuidelines}</a>
+          <a href={linkToGuidelines} class="text-ellipsis">{linkToGuidelines}</a>
         </dd>
       </div>
       
