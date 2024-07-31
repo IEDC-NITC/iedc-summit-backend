@@ -11,5 +11,5 @@ export async function GET() {
     }
     
 
-    return json(events)
+    return json(new_events)
 }

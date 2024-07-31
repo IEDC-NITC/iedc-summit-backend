@@ -10,5 +10,5 @@ export async function GET() {
         new_events.push({...event, imgUrl})
     }
 
-    return json(events)
+    return json(new_events)
 }
