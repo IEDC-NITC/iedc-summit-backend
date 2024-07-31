@@ -1,13 +1,12 @@
 <script>
     export let file;
 
-    let imgUrl = ""
+    let fileName = ""
 
     function onUpload(e) {
         if (e.target.files.length > 0) {
             file = e.target.files[0]
-            console.log(file.name)
-            imgUrl = URL.createObjectURL(file)
+            fileName = file.name
         }
     }
 </script>
@@ -15,13 +14,13 @@
   <label
     for="cover-photo"
     class="block text-sm font-medium leading-6 text-gray-900"
-    >Poster Image</label
+    >Upload Guidelines Pdf</label
   >
   <div
     class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
   >
     <div class="text-center">
-      {#if imgUrl == ""}
+      {#if fileName == ""}
       <svg
         class="mx-auto h-12 w-12 text-gray-300"
         viewBox="0 0 24 24"
@@ -35,27 +34,26 @@
         />
       </svg>
       {:else}
-      <img src={imgUrl} alt="" width="400px">
+      <p>{fileName}</p>
       {/if}
       <div class="mt-4 flex text-sm leading-6 text-gray-600">
         <label
-          for="image-upload"
+          for="file-upload"
           class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
         >
           <span>Upload a file</span>
           <input
-            id="image-upload"
-            name="image-upload"
+            id="file-upload"
+            name="file-upload"
             type="file"
             class="sr-only"
             on:change={onUpload}
-            accept="image/jpeg, image/png, 
-                    image/webp, image/jpg"
+            accept="application/pdf"
           />
         </label>
         <p class="pl-1">or drag and drop</p>
       </div>
-      <p class="text-xs leading-5 text-gray-600">PNG, JPG, WEBP up to 10MB</p>
+      <p class="text-xs leading-5 text-gray-600">PDF</p>
     </div>
   </div>
 </div>

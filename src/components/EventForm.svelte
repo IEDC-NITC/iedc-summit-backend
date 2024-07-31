@@ -1,7 +1,8 @@
 <script>
   import { addEvent } from "$lib/firebase-setup";
-  import { getStorage, ref, uploadBytes } from "firebase/storage";
+  import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
   import ImageUpload from "./ImageUpload.svelte";
+  import PdfUpload from "./PdfUpload.svelte";
 
   export let closeForm;
 
@@ -13,6 +14,7 @@
   let venue = "";
 
   let file = null;
+  let pdfFile = null;
   
   async function submitForm() {
     if (eventName != "" && linkToReg != "") {
@@ -21,6 +23,12 @@
         const fileRef = ref(storage, `posters/${eventName}-${file.name}`);
         await uploadBytes(fileRef, file);
         posterImage = `posters/${eventName}-${file.name}`
+      }
+      if (pdfFile != null) {
+        const storage = getStorage();
+        const fileRef = ref(storage, `guidelines/${eventName}-${pdfFile.name}`);
+        await uploadBytes(fileRef, pdfFile);
+        linkToGuidelines = await getDownloadURL(fileRef)
       }
       await addEvent({
         eventName,
@@ -83,20 +91,7 @@
         </div>
 
         <div class="sm:col-span-4">
-          <label
-            for="email"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Link to Guidelines</label
-          >
-          <div class="mt-2">
-            <input
-              id="text"
-              name="email"
-              type="text"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              bind:value={linkToGuidelines}
-            />
-          </div>
+         <PdfUpload bind:file={pdfFile}></PdfUpload>
         </div>
         <div class="col-span-full">
           <ImageUpload bind:file={file}></ImageUpload>
