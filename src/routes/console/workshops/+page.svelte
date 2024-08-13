@@ -3,6 +3,7 @@
   import { getAllWorkshops } from "$lib/firebase-setup";
   import { onMount } from "svelte";
   import LectureCard from "../../../components/LectureCard.svelte";
+  import WorkshopCard from "../../../components/WorkshopCard.svelte";
 
   let events = [];
 
@@ -31,7 +32,7 @@
   <ul class="flex flex-col gap-2">
     {#each events as event}
       <li>
-        <LectureCard {...event}></LectureCard>
+        <WorkshopCard {...event}></WorkshopCard>
       </li>
     {/each}
   </ul>
