@@ -7,8 +7,13 @@ export async function GET() {
     let new_events = []
     for (let event of events) {
         const imgUrl = await getDownloadURL(ref(storage, event.posterImage))
-        new_events.push({...event, imgUrl})
+        new_events.push({ ...event, imgUrl })
     }
 
-    return json(new_events)
+    return new Response(JSON.stringify(new_events), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        }
+    });
 }
