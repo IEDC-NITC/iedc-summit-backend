@@ -1,5 +1,5 @@
 <script>
-  import { deleteEvent } from "$lib/firebase-setup";
+  import { deleteEvent, markEventComplete } from "$lib/firebase-setup";
   import { getDownloadURL, getStorage, ref } from "firebase/storage";
   import { onMount } from "svelte";
 
@@ -10,18 +10,18 @@
   export let venue;
   export let posterImage;
   export let docId;
+  export let completed;
 
-  let posterUrl = ""
+  let posterUrl = "";
 
   onMount(async () => {
     // get poster url
 
-    const storage = getStorage()
+    const storage = getStorage();
     getDownloadURL(ref(storage, posterImage)).then((url) => {
       posterUrl = url;
-    })
-
-  })
+    });
+  });
 </script>
 
 <!--
@@ -57,9 +57,17 @@
           Link to Register
         </dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <a href={linkToReg} class="w-36"><span class="w-36 text-ellipsis whitespace-nowrap overflow-hidden" title={linkToReg}>
-            {linkToReg.substring(0, Math.min(64, linkToReg.length))}{#if linkToReg.length > 24}...{/if}
-          </span></a>
+          <a href={linkToReg} class="w-36"
+            ><span
+              class="w-36 text-ellipsis whitespace-nowrap overflow-hidden"
+              title={linkToReg}
+            >
+              {linkToReg.substring(
+                0,
+                Math.min(64, linkToReg.length),
+              )}{#if linkToReg.length > 24}...{/if}
+            </span></a
+          >
         </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -67,9 +75,14 @@
           Poster Image
         </dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <a href={linkToReg} class="w-36"><span class="w-36 text-ellipsis whitespace-nowrap overflow-hidden" title={linkToReg}>
-            <img src={posterUrl} alt="" width="400px">
-          </span></a>
+          <a href={linkToReg} class="w-36"
+            ><span
+              class="w-36 text-ellipsis whitespace-nowrap overflow-hidden"
+              title={linkToReg}
+            >
+              <img src={posterUrl} alt="" width="400px" />
+            </span></a
+          >
         </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -77,16 +90,15 @@
           Link to Guidelines
         </dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <a href={linkToGuidelines} class="text-ellipsis">{linkToGuidelines}</a>
+          <a href={linkToGuidelines} class="text-ellipsis">{linkToGuidelines}</a
+          >
         </dd>
       </div>
-      
+
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium leading-6 text-gray-900">
-          Venue
-        </dt>
+        <dt class="text-sm font-medium leading-6 text-gray-900">Venue</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            {venue}
+          {venue}
         </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -95,9 +107,24 @@
           {price}
         </dd>
       </div>
-      <div>
+      <div class="flex justify-between items-center">
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <button class="bg-red-500 text-white p-2 rounded" on:click={() => deleteEvent(docId)}>Delete</button>
+          <button
+            class="bg-red-500 text-white p-2 rounded"
+            on:click={() => deleteEvent(docId)}>Delete</button
+          >
+        </dd>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <label class="inline-flex items-center cursor-pointer">
+            <span
+            class="ms-3 text-sm font-normal text-gray-700 mr-2"
+            >Mark as Complete </span
+            >
+            <input type="checkbox" value="" class="sr-only peer" on:change={(e) => markEventComplete(docId, e.target.checked)} checked={completed}/>
+            <div
+            class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+            ></div>
+          </label>
         </dd>
       </div>
     </dl>

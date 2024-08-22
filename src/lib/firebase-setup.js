@@ -3,23 +3,31 @@ import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDocs, collection, query, getFirestore, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { getDocs, collection, query, getFirestore, addDoc, deleteDoc, doc, setDoc} from 'firebase/firestore';
 
-import { PUBLIC_API_KEY, PUBLIC_APP_ID, PUBLIC_AUTH_DOMAIN, PUBLIC_MEASUREMENT_ID, PUBLIC_MESSAGING_SENDER_ID, PUBLIC_PROJECT_ID, PUBLIC_STORAGE_BUCKET } from "$env/static/public"
+// import { PUBLIC_API_KEY, PUBLIC_APP_ID, PUBLIC_AUTH_DOMAIN, PUBLIC_MEASUREMENT_ID, PUBLIC_MESSAGING_SENDER_ID, PUBLIC_PROJECT_ID, PUBLIC_STORAGE_BUCKET } from "$env/static/public"
 
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyD0DjodnciGm4X7UsNXNuvH9CenkH_01jY",
-    authDomain: "iedc-backend-57b57.firebaseapp.com",
-    projectId: "iedc-backend-57b57",
-    storageBucket: "iedc-backend-57b57.appspot.com",
-    messagingSenderId: PUBLIC_MESSAGING_SENDER_ID,
-    appId: PUBLIC_APP_ID,
-    measurementId: "G-2JHGTZ82DM"
-};
 
+    apiKey: "AIzaSyD0DjodnciGm4X7UsNXNuvH9CenkH_01jY",
+  
+    authDomain: "iedc-backend-57b57.firebaseapp.com",
+  
+    projectId: "iedc-backend-57b57",
+  
+    storageBucket: "iedc-backend-57b57.appspot.com",
+  
+    messagingSenderId: "998530857834",
+  
+    appId: "1:998530857834:web:36b38caae67c14e2124313",
+  
+    measurementId: "G-2JHGTZ82DM"
+  
+  };
+  
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
@@ -52,7 +60,7 @@ export async function loadImage(pathRef) {
  * @param {{ eventName: string; linkToGuidelines: string; linkToReg: string; posterImage: string; price: number; venue: string; }} eventData
  */
 export async function addEvent(eventData) {
-    const docRef = await addDoc(collection(db, "events"), eventData)
+    const docRef = await addDoc(collection(db, "events"), {...eventData, completed: false})
 }
 
 /**
@@ -81,7 +89,7 @@ export async function getAllEvents() {
 
 // handling lectures
 export async function addLecture(eventData) {
-    const docRef = await addDoc(collection(db, "lectures"), eventData)
+    const docRef = await addDoc(collection(db, "lectures"), {...eventData, completed: false})
 }
 
 /**
@@ -109,7 +117,7 @@ export async function getAllLectures() {
 
 // handling workshops
 export async function addWorkshop(eventData) {
-    const docRef = await addDoc(collection(db, "workshops"), eventData)
+    const docRef = await addDoc(collection(db, "workshops"), {...eventData, completed: false})
 }
 
 /**
@@ -133,4 +141,19 @@ export async function getAllWorkshops() {
 
     return events
 
+}
+
+// sets the value of the completed property to whatever state
+export async function markEventComplete(id, state) {
+    await setDoc(doc(db, "events", id), {completed: state}, {merge: true})
+}
+
+// sets the value of the completed property to whatever state
+export async function markLectureComplete(id, state) {
+    await setDoc(doc(db, "lectures", id), {completed: state}, {merge: true})
+}
+
+// sets the value of the completed property to whatever state
+export async function markWorkshopComplete(id, state) {
+    await setDoc(doc(db, "workshops", id), {completed: state}, {merge: true})
 }
