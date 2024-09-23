@@ -15,7 +15,7 @@
   <label
     for="cover-photo"
     class="block text-sm font-medium leading-6 text-gray-900"
-    >Poster Image</label
+    >Image</label
   >
   <div
     class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"

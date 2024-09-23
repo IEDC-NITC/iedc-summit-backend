@@ -157,3 +157,30 @@ export async function markLectureComplete(id, state) {
 export async function markWorkshopComplete(id, state) {
     await setDoc(doc(db, "workshops", id), {completed: state}, {merge: true})
 }
+
+
+
+// handling speakers
+export async function addData(collectionname,Data) {
+    const docRef = await addDoc(collection(db, collectionname), {...Data})
+}
+
+
+export async function deleteData(collectionname,Id) {
+    await deleteDoc(doc(db, collectionname, Id))
+}
+
+export async function getAllData(collectionname) {
+    const q = query(collection(db, collectionname));
+    /**
+     * @type {{ docId: string; }[]}
+     */
+    let list = []
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        list.push({...doc.data(), docId: doc.id})
+    });
+
+    return list
+}
