@@ -14,7 +14,7 @@
     loading = false;
   });
 
-  async function updateEvents() {
+  async function updateSpeakers() {
     data = await getAllData(collection);
   }
 
@@ -22,7 +22,7 @@
 
   function closeForm() {
     formOpen = false;
-    updateEvents();
+    updateSpeakers();
   }
 </script>
 
@@ -40,7 +40,7 @@
     {:else}
       {#each data as each}
         <li>
-          <SpeakersCard {...each}></SpeakersCard>
+          <SpeakersCard {...each} onCall={updateSpeakers}></SpeakersCard>
         </li>
       {/each}{/if}
   </ul>

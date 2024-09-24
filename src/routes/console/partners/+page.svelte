@@ -2,10 +2,10 @@
   import { getAllData } from "$lib/firebase-setup";
   import { onMount } from "svelte";
   import { LoaderIcon } from "svelte-feather-icons";
-  import SponsorsForm from "../../../components/SponsorsForm.svelte";
-  import SponsorsCard from "../../../components/SponsorsCard.svelte";
+  import PartnersForm from "../../../components/PartnersForm.svelte";
+  import PartnersCard from "../../../components/PartnersCard.svelte";
 
-  let collection = "sponsors";
+  let collection = "partners";
   let data = [];
   let loading = true;
 
@@ -29,7 +29,7 @@
 <div>
   <header class="bg-white">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Sponsors</h1>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Partners</h1>
     </div>
   </header>
   <ul class="flex flex-col gap-2">
@@ -40,16 +40,16 @@
     {:else}
       {#each data as each}
         <li>
-          <SponsorsCard {...each}></SponsorsCard>
+          <PartnersCard {...each} onCall={updateSponsors}></PartnersCard>
         </li>
       {/each}{/if}
   </ul>
   {#if formOpen}
-    <SponsorsForm {closeForm}></SponsorsForm>
+    <PartnersForm {closeForm}></PartnersForm>
   {:else}
     <button
       class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      on:click={() => (formOpen = true)}>New Sponsor</button
+      on:click={() => (formOpen = true)}>New Partner</button
     >
   {/if}
 </div>

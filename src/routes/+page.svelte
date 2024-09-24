@@ -17,6 +17,6 @@
 </div>
 <svelte:head>
   <title>
-    IEDC Admin``
+    IEDC Admin
   </title>
 </svelte:head>

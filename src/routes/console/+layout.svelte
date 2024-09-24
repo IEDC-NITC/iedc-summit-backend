@@ -51,11 +51,11 @@
                 >Speakers</a
               >
               <a
-                href="/console/sponsors"
-                class={$page.url.pathname == "/console/sponsors"
+                href="/console/partners"
+                class={$page.url.pathname == "/console/partners"
                   ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                   : "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"}
-                >Sponsors</a
+                >Partners</a
               >
             <a
                 href="/console/news"
@@ -145,11 +145,11 @@
                 >Speakers</a
               >
                <a
-                href="/console/sponsors"
-                class={$page.url.pathname == "/console/sponsors"
+                href="/console/partners"
+                class={$page.url.pathname == "/console/partners"
                   ? "block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
                   : "block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"}
-                >Sponsors</a
+                >Partners</a
               >     
               <a
                 href="/console/news"

@@ -10,7 +10,12 @@ export async function GET() {
     list.push({ ...each, imgUrl });
   }
 
-  list = list.sort((a, b) => a.priority - b.priority);
+  
+
+  if (list.length > 0) {
+    list = list.sort((a, b) => a.Priority - b.Priority);
+  }
+
 
   return new Response(JSON.stringify(list), {
     headers: {

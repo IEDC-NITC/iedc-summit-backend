@@ -1,6 +1,6 @@
 <script>
   import LectureForm from "../../../components/LectureForm.svelte";
-  import { getAllLectures } from "$lib/firebase-setup";
+  import { getAllData } from "$lib/firebase-setup";
   import { onMount } from "svelte";
   import LectureCard from "../../../components/LectureCard.svelte";
   import { LoaderIcon } from "svelte-feather-icons";
@@ -9,14 +9,19 @@
   let loading = true;
 
   onMount(async () => {
-    events = await getAllLectures();
+    events = await getAllData("lectures")
     loading = false;
   });
+
+  async function updateLectures() {
+    events = await getAllData("lectures");
+  }
 
   let formOpen = false;
 
   function closeForm() {
     formOpen = false;
+    updateLectures()
   }
 </script>
 
@@ -34,7 +39,7 @@
     {:else}
     {#each events as event}
       <li>
-        <LectureCard {...event}></LectureCard>
+        <LectureCard {...event} onCall={updateLectures}></LectureCard>
       </li>
     {/each}
     {/if}

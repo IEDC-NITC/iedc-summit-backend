@@ -23,11 +23,11 @@
       ) {
         if (file != null) {
           const storage = getStorage();
-          const fileRef = ref(storage, `sponsors/${Name}-${file.name}`);
+          const fileRef = ref(storage, `partners/${Name}-${file.name}`);
           await uploadBytes(fileRef, file);
-          Image = `sponsors/${Name}-${file.name}`;
+          Image = `partners/${Name}-${file.name}`;
         }
-        await addData("sponsors", {
+        await addData("partners", {
           Name,
           Priority,
           Image,
@@ -42,7 +42,7 @@
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
         <h2 class="text-base font-semibold leading-7 text-gray-900">
-          Enter Speaker info
+          Enter partners info
         </h2>
       </div>
   

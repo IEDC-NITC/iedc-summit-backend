@@ -7,6 +7,7 @@
   export let Priority;
   export let Image;
   export let docId;
+  export let onCall;
 
   let ImageUrl = "";
 
@@ -46,8 +47,9 @@
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
           <button
             class="bg-red-500 text-white p-2 rounded"
-            on:click={() => {
-              deleteData("sponsors", docId)
+            on:click={async () => {
+              await deleteData("partners", docId);
+              onCall();
             }}>Delete</button
           >
         </dd>
