@@ -1,6 +1,6 @@
 import {
-  getAllData
-  storage,
+  getAllData,
+  storage
 } from "$lib/firebase-setup";
 import { getDownloadURL, ref } from "firebase/storage";
 export async function GET() {
@@ -35,7 +35,7 @@ export async function GET() {
         imgUrl,
       };
     })
-    .sort((a, b) => a.priority - b.priority);
+    .sort((a, b) => a.Priority - b.Priority);
 
   const sponsors = (await getAllData("sponsors"))
     .map(async (sponsor) => {
@@ -45,11 +45,9 @@ export async function GET() {
         imgUrl,
       };
     })
-    .sort((a, b) => a.priority - b.priority);
+    .sort((a, b) => a.Priority - b.Priority);
 
-  const news = (await getAllData("news")).sort(
-    (a, b) => a.priority - b.priority
-  );
+  const news = (await getAllData("news")).sort((a, b) => a.Priority - b.Priority);
 
   return new Response(
     JSON.stringify({ events, lectures, workshops, news, speakers, sponsors }),
