@@ -1,13 +1,10 @@
 import {
-  getAllData,
-  getAllEvents,
-  getAllLectures,
-  getAllWorkshops,
+  getAllData
   storage,
 } from "$lib/firebase-setup";
 import { getDownloadURL, ref } from "firebase/storage";
 export async function GET() {
-  const events = (await getAllEvents()).map(async (event) => {
+  const events = (await getAllData("events")).map(async (event) => {
     const imgUrl = await getDownloadURL(ref(storage, event.posterImage));
     return {
       ...event,
@@ -15,14 +12,14 @@ export async function GET() {
     };
   });
 
-  const lectures = (await getAllLectures()).map(async (lecture) => {
+  const lectures = (await getAllData("lectures")).map(async (lecture) => {
     const imgUrl = await getDownloadURL(ref(storage, lecture.posterImage));
     return {
       ...lecture,
       imgUrl,
     };
   });
-  const workshops = (await getAllWorkshops()).map(async (workshop) => {
+  const workshops = (await getAllData("workshops")).map(async (workshop) => {
     const imgUrl = await getDownloadURL(ref(storage, workshop.posterImage));
     return {
       ...workshop,
