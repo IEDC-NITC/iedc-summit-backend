@@ -1,4 +1,5 @@
 <script>
+  import { goto } from "$app/navigation";
   import { signInWithCreds } from "$lib/firebase-auth";
   import { authUser } from "$lib/store";
 
@@ -17,7 +18,7 @@
   }
   authUser.subscribe((val) => {
     if (val != null) {
-      goto("/console")
+      goto('/console/events')
     }
     else {
       showError = !showError;
