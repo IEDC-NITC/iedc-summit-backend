@@ -1,5 +1,4 @@
 <script>
-  import { goto } from "$app/navigation";
   import { signInWithCreds } from "$lib/firebase-auth";
   import { authUser } from "$lib/store";
 

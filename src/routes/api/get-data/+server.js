@@ -1,56 +1,15 @@
-import {
-  getAllData,
-  storage
-} from "$lib/firebase-setup";
+import { getAllDataFormatted, storage } from "$lib/firebase-setup";
 import { getDownloadURL, ref } from "firebase/storage";
 export async function GET() {
-  const events = (await getAllData("events")).map(async (event) => {
-    const imgUrl = await getDownloadURL(ref(storage, event.posterImage));
-    return {
-      ...event,
-      imgUrl,
-    };
-  });
-
-  const lectures = (await getAllData("lectures")).map(async (lecture) => {
-    const imgUrl = await getDownloadURL(ref(storage, lecture.posterImage));
-    return {
-      ...lecture,
-      imgUrl,
-    };
-  });
-  const workshops = (await getAllData("workshops")).map(async (workshop) => {
-    const imgUrl = await getDownloadURL(ref(storage, workshop.posterImage));
-    return {
-      ...workshop,
-      imgUrl,
-    };
-  });
-
-  const speakers = (await getAllData("speakers"))
-    .map(async (speaker) => {
-      const imgUrl = await getDownloadURL(ref(storage, speakerImage));
-      return {
-        ...speaker,
-        imgUrl,
-      };
-    })
-    .sort((a, b) => a.Priority - b.Priority);
-
-  const sponsors = (await getAllData("sponsors"))
-    .map(async (sponsor) => {
-      const imgUrl = await getDownloadURL(ref(storage, sponsor.Image));
-      return {
-        ...sponsor,
-        imgUrl,
-      };
-    })
-    .sort((a, b) => a.Priority - b.Priority);
-
-  const news = (await getAllData("news")).sort((a, b) => a.Priority - b.Priority);
+  let events = await getAllDataFormatted("events");
+  let lectures = await getAllDataFormatted("lectures");
+  let news = await getAllDataFormatted("news");
+  let workshops = await getAllDataFormatted("workshops");
+  let speakers = await getAllDataFormatted("speakers");
+  let partners = await getAllDataFormatted("partners");
 
   return new Response(
-    JSON.stringify({ events, lectures, workshops, news, speakers, sponsors }),
+    JSON.stringify({ events, lectures, workshops, news, speakers,partners}),
     {
       headers: {
         "Content-Type": "application/json",
