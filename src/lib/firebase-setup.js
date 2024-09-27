@@ -195,7 +195,6 @@ export async function getAllDataFormatted(collectionname) {
   let new_events = [];
   for (let event of list) {
     if (event.posterImage != null) {
-      console.log(event.posterImage)
       const imgUrl = await getDownloadURL(ref(storage, event.posterImage));
       new_events.push({ ...event, imgUrl });
     }
