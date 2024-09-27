@@ -194,15 +194,17 @@ export async function getAllDataFormatted(collectionname) {
 
   let new_events = [];
   for (let event of list) {
-    if (event.posterImage === 'undefined') {
+    if (event.posterImage != null) {
+      console.log(event.posterImage)
       const imgUrl = await getDownloadURL(ref(storage, event.posterImage));
       new_events.push({ ...event, imgUrl });
-    } else if (event.Image === 'undefined') {
+    }
+    else if (event.Image != null) {
       const imgUrl = await getDownloadURL(ref(storage, event.Image));
       new_events.push({ ...event, imgUrl });
     }
-    else{
-        new_events.push(event);
+    else {
+      new_events.push(event);
     }
 
   }
