@@ -8,6 +8,7 @@ export async function GET() {
   let partners = await getAllDataFormatted("partners");
   let news = await getAllDataFormatted("news");
 
+  
   return new Response(
     JSON.stringify({ events, lectures, workshops, news, speakers, partners }),
     {
