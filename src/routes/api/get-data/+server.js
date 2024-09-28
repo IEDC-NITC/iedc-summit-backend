@@ -7,10 +7,18 @@ export async function GET() {
   let speakers = await getAllDataFormatted("speakers");
   let partners = await getAllDataFormatted("partners");
   let news = await getAllDataFormatted("news");
+  let faqs = await getAllDataFormatted("faqs");
 
-  
   return new Response(
-    JSON.stringify({ events, lectures, workshops, news, speakers, partners }),
+    JSON.stringify({
+      events,
+      lectures,
+      workshops,
+      news,
+      speakers,
+      partners,
+      faqs,
+    }),
     {
       headers: {
         "Content-Type": "application/json",
