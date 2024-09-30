@@ -27,6 +27,7 @@
         speakerName,
         linkToReg,
         posterImage,
+        Priority,
         price,
         venue,
       });

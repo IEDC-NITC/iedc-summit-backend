@@ -27,6 +27,7 @@
         eventName,
         speakerName,
         linkToReg,
+        Priority,
         posterImage,
         price,
         venue,

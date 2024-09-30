@@ -41,6 +41,7 @@
         linkToGuidelines,
         linkToReg,
         posterImage,
+        Priority,
         price,
         venue,
       });
